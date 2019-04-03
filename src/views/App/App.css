@@ -1,0 +1,49 @@
+html {  
+  height: 100%;
+  width: 100%;
+}
+body {  
+  height: 100%;
+  width: 100%;
+}
+
+#root {  
+  height: 100%;
+  width: 100%;
+}
+.App {
+  text-align: center;
+  background-color: rgb(80, 80, 80);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  overflow-y:auto;
+}
+
+.App-logo {
+  /* animation: App-logo-spin infinite 20s linear; */
+  height: 80px;
+}
+
+.App-header {
+  /* background-color: #222; */
+  /* height: 150px; */
+  padding: 10px 0 ;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+  color: rgb(196, 196, 196);
+  text-align: left;
+
+}
+
+.App-intro {
+  font-size: large;
+}
+
+
+.NavBar .active {
+  background-color: #693484;
+}
