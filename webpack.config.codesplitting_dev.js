@@ -1,15 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
-const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 module.exports = {
     entry: {
         main: path.resolve(__dirname, 'src/index.js'),
     },
     output: {
-        path: path.resolve(__dirname, 'dev'),
+        path: path.resolve(__dirname, 'build'),
         filename: '[name].[hash].js',
     },
     plugins: [
@@ -73,7 +71,7 @@ module.exports = {
         },
     },
     devServer: {
-        contentBase: './distnew',
+        contentBase: './build',
         hot: true
     }
 };

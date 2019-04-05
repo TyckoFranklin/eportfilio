@@ -3,19 +3,37 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     entry: {
         main: path.resolve(__dirname, 'src/index.js'),
     },
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'build'),
         filename: '[name].[contenthash:8].js',
     },
     plugins: [
-        new MinifyPlugin({removeDebugger:true, removeConsole:true}, {}),
+        new MinifyPlugin({ removeDebugger: true, removeConsole: true }, {}),
         new HtmlWebpackPlugin({
-            template: "./src/template.html"
+            inject: true,
+            template: "./src/template.html",
+            minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                collapseInlineTagWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+                removeScriptTypeAttributes: true,
+                collapseBooleanAttributes: true,
+                removeComments: true,
+            },
         }),
         new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
         new CleanWebpackPlugin(),
@@ -31,8 +49,8 @@ module.exports = {
                 test: /\.css$/,
                 test: /\.css$/,
                 use: [
-                "style-loader", //3. Inject styles into DOM
-                "css-loader", //2. Turns css into commonjs
+                    "style-loader", //3. Inject styles into DOM
+                    "css-loader", //2. Turns css into commonjs
                 ]
             },
             {
@@ -51,11 +69,21 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     optimization: {
+        // minimizer: [
+        //     new TerserPlugin({
+        //         cache: true,
+        //         parallel: true,
+        //         // sourceMap: true, // Must be set to true if using source-maps in production
+        //         terserOptions: {
+        //             // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+        //         }
+        //     }),
+        // ],
         runtimeChunk: 'single',
         splitChunks: {
             chunks: 'all',
             maxInitialRequests: Infinity,
-            minSize: 0,            
+            minSize: 0,
             minChunks: 1,
             cacheGroups: {
                 vendor: {
@@ -73,7 +101,7 @@ module.exports = {
         },
     },
     devServer: {
-        contentBase: './distnew',
+        contentBase: './build',
         hot: true
     }
 };

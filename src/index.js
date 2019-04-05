@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './views/App/index';
 import registerServiceWorker from './registerServiceWorker';
-
+import ag_grid from 'ag-grid';
 
 
 
