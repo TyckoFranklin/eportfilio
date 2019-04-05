@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
-const TerserPlugin = require('terser-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -14,7 +14,7 @@ module.exports = {
         filename: '[name].[contenthash:8].js',
     },
     plugins: [
-        new MinifyPlugin({ removeDebugger: true, removeConsole: true }, {}),
+        new MinifyPlugin({ removeDebugger: true, removeConsole: true }, {comments:false}),
         new HtmlWebpackPlugin({
             inject: true,
             template: "./src/template.html",
@@ -69,16 +69,6 @@ module.exports = {
         extensions: ['*', '.js', '.jsx']
     },
     optimization: {
-        // minimizer: [
-        //     new TerserPlugin({
-        //         cache: true,
-        //         parallel: true,
-        //         // sourceMap: true, // Must be set to true if using source-maps in production
-        //         terserOptions: {
-        //             // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-        //         }
-        //     }),
-        // ],
         runtimeChunk: 'single',
         splitChunks: {
             chunks: 'all',
@@ -87,6 +77,7 @@ module.exports = {
             minChunks: 1,
             cacheGroups: {
                 vendor: {
+                    reuseExistingChunk: true,
                     test: /[\\/]node_modules[\\/]/,
                     name(module) {
                         // get the name. E.g. node_modules/packageName/not/this/part.js

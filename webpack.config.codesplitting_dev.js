@@ -57,6 +57,7 @@ module.exports = {
             minSize: 0,
             cacheGroups: {
                 vendor: {
+                    reuseExistingChunk: true,
                     test: /[\\/]node_modules[\\/]/,
                     name(module) {
                         // get the name. E.g. node_modules/packageName/not/this/part.js
